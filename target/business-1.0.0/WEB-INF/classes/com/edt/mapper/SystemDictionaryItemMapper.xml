@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.SystemDictionaryItemMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.SystemDictionaryItem">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sequence" property="sequence" jdbcType="INTEGER"/>
+        <result column="t_id" property="type.id" jdbcType="BIGINT"/>
+        <result column="p_id" property="parent.id"/>
+        <result column="p_title" property="parent.title"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from system_dictionary_item
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.edt.domain.SystemDictionaryItem" useGeneratedKeys="true" keyProperty="id">
+        insert into system_dictionary_item (title, sequence, type_id,
+                                            parent_id)
+        values (#{title,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER}, #{type.id,jdbcType=BIGINT},
+                #{parent.id,jdbcType=BIGINT})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.edt.domain.SystemDictionaryItem">
+        update system_dictionary_item
+        set title     = #{title,jdbcType=VARCHAR},
+            sequence  = #{sequence,jdbcType=INTEGER},
+            type_id   = #{type.id,jdbcType=BIGINT},
+            parent_id = #{parent.id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select id, title, sequence, type_id, parent_id
+        from system_dictionary_item
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, title, sequence, type_id, parent_id
+        from system_dictionary_item
+    </select>
+    <select id="selectForList" resultMap="BaseResultMap">
+        select t1.id, t1.title, t1.sequence, t1.type_id t_id, t1.parent_id p_id, t2.title p_title
+        from system_dictionary_item t1
+        left join system_dictionary_item t2
+        on t1.parent_id = t2.id
+        <where>
+            <if test="typeId!=null">
+                and t1.type_id =#{typeId}
+            </if>
+            <if test="parentId!=null">
+                and t1.parent_id = #{parentId}
+            </if>
+        </where>
+    </select>
+    <select id="selectByTypeId" resultType="com.edt.domain.SystemDictionaryItem">
+        select id, title, sequence, type_id, parent_id
+        from system_dictionary_item
+        where type_id = #{id}
+        order by sequence
+    </select>
+    <select id="selectByTypeSn" resultType="com.edt.domain.SystemDictionaryItem">
+        SELECT sdi.id,sdi.title,sdi.sequence,sdi.type_id,sdi.parent_id
+        from system_dictionary_item sdi
+                 LEFT JOIN system_dictionary sd on sdi.type_id = sd.id
+        where sd.sn =#{sn} order by  sdi.sequence
+    </select>
+
+    <select id="selectByParentId" resultType="com.edt.domain.SystemDictionaryItem">
+        select id, title, sequence, type_id, parent_id
+        from system_dictionary_item
+        where parent_id = #{id}
+        order by sequence
+    </select>
+</mapper>

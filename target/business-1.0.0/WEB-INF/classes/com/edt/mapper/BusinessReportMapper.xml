@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.BusinessReportMapper">
+    <select id="selectReport" resultType="java.util.HashMap">
+        select ${groupType} groupType,
+               count(*) number,
+               sum(c.total_amount) totalAmount,
+               sum(c.discount_amount) discountAmount,
+               sum(c.pay_amount) payAmount
+        from consumption c
+        join business b on c.business_id = b.id
+        <where>
+            <if test="businessId!=null">
+                and c.business_id = #{businessId}
+            </if>
+            <if test="startDate!=null">
+                and c.create_time &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and c.create_time &lt;= #{endDate}
+            </if>
+            <if test="status!=null">
+                and c.status = #{status}
+            </if>
+            <choose>
+                <when test="ano==1">
+                    and c.appointment_ano is not null
+                </when>
+                <when test="ano==0">
+                    and c.appointment_ano is null
+                </when>
+            </choose>
+        </where>
+        group by ${groupType}
+    </select>
+</mapper>

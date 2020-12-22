@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>小豪门店运营管理系统-登录</title>
+    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/js/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/js/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/js/adminlte/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/js/adminlte/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/js/adminlte/css/fonts.googleapis.com.css">
+
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/adminlte/js/adminlte.min.js"></script>
+
+    <link rel="stylesheet" href="/js/plugins/sweetalert2/sweetalert2.min.css">
+    <script src="/js/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/js/plugins/jquery-form/jquery.form.js"></script>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="https://blog.csdn.net/EDT777"><b>小豪</b>门店运营管理系统</a>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">请输入账号密码</p>
+
+        <form method="post" id="loginForm" action="/userLogin">
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="请输入账号" value="admin" name="username">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="请输入密码" name="password" value="1">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="button" class="btn btn-primary btn-block btn-flat submitBtn">登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    $('.submitBtn').click(function () {
+        //若此按钮类型是buttion则使用.ajaxSubmit,若是submit类型则使用.ajaxForm
+        //使用Jquery-form插件来提交表单   有表单则用此插件方式 更快捷
+        $("#loginForm").ajaxSubmit(function (data) {
+            if (data.success) {
+                Swal.fire({
+                    title: '确认登陆吗?',
+                    icon: 'success',
+                    confirmButtonText: 'OK'                }).then((result) => {
+                    if (result.value) {
+                        window.location.href = "/business/list";
+                    }
+                })
+            } else {
+                Swal.fire(
+                    data.msg,
+                    '',
+                    'error'
+                )
+            }
+        });
+    });
+
+    //没表单的情况下 则用此方法ajax 提交数据给后台
+    // $(".submitBtn").click(function () {
+    //一次性获取到表单中的所有的参数名和参数值,格式: username=admin&password=1
+    // console.log($('#loginForm').serialize());
+    //     let username = $('input[name=username]').val();
+    //     let password = $('input[name=password]').val();
+    //     $.post('/userLogin',$('#loginForm').serialize(),function (data) {
+    //         if (data.success){
+    //             Swal.fire({
+    //                 title: '确认登陆吗?',
+    //                 icon: 'success',
+    //                 confirmButtonText: 'OK'
+    //             }).then((result) => {
+    //                 if (result.value) {
+    //                     window.location.href="/employee/list";
+    //                 }
+    //             })
+    //         }else{
+    //             Swal.fire(
+    //                 data.msg,
+    //                 '',
+    //                 'error'
+    //             )
+    //         }
+    //     })
+    //
+    // })
+
+</script>
+
+</body>
+</html>

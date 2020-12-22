@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.BusinessMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.Business">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="scope" property="scope" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="open_date" property="openDate" jdbcType="DATE"/>
+        <result column="license_img" property="licenseImg" jdbcType="VARCHAR"/>
+        <result column="license_number" property="licenseNumber" jdbcType="VARCHAR"/>
+        <result column="legal_name" property="legalName" jdbcType="VARCHAR"/>
+        <result column="legal_tel" property="legalTel" jdbcType="VARCHAR"/>
+        <result column="legal_idcard" property="legalIdcard" jdbcType="VARCHAR"/>
+        <result column="main_store" property="mainStore" jdbcType="BIT"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from business
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.edt.domain.Business" useGeneratedKeys="true" keyProperty="id">
+        insert into business (name, intro, scope,
+                              tel, address, open_date,
+                              license_img, license_number, legal_name,
+                              legal_tel, legal_idcard, main_store)
+        values (#{name,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{scope,jdbcType=VARCHAR},
+                #{tel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{openDate,jdbcType=DATE},
+                #{licenseImg,jdbcType=VARCHAR}, #{licenseNumber,jdbcType=VARCHAR}, #{legalName,jdbcType=VARCHAR},
+                #{legalTel,jdbcType=VARCHAR}, #{legalIdcard,jdbcType=VARCHAR}, #{mainStore,jdbcType=BIT})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.edt.domain.Business">
+        update business
+        set name           = #{name,jdbcType=VARCHAR},
+            intro          = #{intro,jdbcType=VARCHAR},
+            scope          = #{scope,jdbcType=VARCHAR},
+            tel            = #{tel,jdbcType=VARCHAR},
+            address        = #{address,jdbcType=VARCHAR},
+            open_date      = #{openDate,jdbcType=DATE},
+            <if test="licenseImg!=null and licenseImg!=''">
+                license_img    = #{licenseImg,jdbcType=VARCHAR},
+            </if>
+            license_number = #{licenseNumber,jdbcType=VARCHAR},
+            legal_name     = #{legalName,jdbcType=VARCHAR},
+            legal_tel      = #{legalTel,jdbcType=VARCHAR},
+            legal_idcard   = #{legalIdcard,jdbcType=VARCHAR},
+            main_store     = #{mainStore,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select id,
+               name,
+               intro,
+               scope,
+               tel,
+               address,
+               open_date,
+               license_img,
+               license_number,
+               legal_name,
+               legal_tel,
+               legal_idcard,
+               main_store
+        from business
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,
+               name,
+               intro,
+               scope,
+               tel,
+               address,
+               open_date,
+               license_img,
+               license_number,
+               legal_name,
+               legal_tel,
+               legal_idcard,
+               main_store
+        from business
+    </select>
+    <select id="selectForList" resultMap="BaseResultMap">
+        select id,
+        name,
+        intro,
+        scope,
+        tel,
+        address,
+        open_date,
+        license_img,
+        license_number,
+        legal_name,
+        legal_tel,
+        legal_idcard,
+        main_store
+        from business
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="scope!=null and scope!=''">
+                and scope like concat('%',#{scope},'%')
+            </if>
+            <if test="tel!=null and tel!=''">
+                and tel like concat('%',#{tel},'%')
+            </if>
+            <if test="legalName!=null and legalName!=''">
+                and legal_name like concat('%',#{legalName},'%')
+            </if>
+            <if test="startOpenDate!=null">
+                and open_date &gt; #{startOpenDate}
+            </if>
+            <if test="endOpenDate!=null">
+                and open_date &lt; #{endOpenDate}
+            </if>
+        </where>
+    </select>
+    <select id="selectMainStore" resultType="com.edt.domain.Business">
+        select id,
+               name,
+               intro,
+               scope,
+               tel,
+               address,
+               open_date,
+               license_img,
+               license_number,
+               legal_name,
+               legal_tel,
+               legal_idcard,
+               main_store
+        from business where main_store=1
+    </select>
+</mapper>

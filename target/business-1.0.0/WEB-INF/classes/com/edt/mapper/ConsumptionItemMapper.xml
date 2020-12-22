@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.ConsumptionItemMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.ConsumptionItem">
+        <id column="id" property="id"/>
+        <result column="amount" property="amount"/>
+        <result column="pay_amount" property="payAmount"/>
+        <result column="discount_amount" property="discountAmount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="cno" property="cno"/>
+        <result column="create_user_id" property="createUser.id"/>
+        <result column="e_id" property="createUser.id"/>
+        <result column="e_name" property="createUser.name"/>
+        <result column="t2_id" property="category.id"/>
+        <result column="t2_title" property="category.title"/>
+        <result column="t3_id" property="categoryItem.id"/>
+        <result column="t3_title" property="categoryItem.title"/>
+        <result column="t4_id" property="payType.id"/>
+        <result column="t4_title" property="payType.title"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey">
+        delete
+        from consumption_item
+        where id = #{id}
+    </delete>
+    <delete id="batchDelete">
+        delete from consumption_item
+        where id in
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into consumption_item (category_id, category_item_id, pay_type_id, amount, pay_amount,
+                                      discount_amount, create_user_id, create_time, cno)
+        values (#{category.id}, #{categoryItem.id}, #{payType.id}, #{amount}, #{payAmount},
+                #{discountAmount}, #{createUser.id}, #{createTime}, #{cno})
+    </insert>
+    <update id="updateByPrimaryKey">
+        update consumption_item
+        set category_id      = #{category.id},
+            category_item_id = #{categoryItem.id},
+            pay_type_id      = #{payType.id},
+            amount           = #{amount},
+            pay_amount       = #{payAmount},
+            discount_amount  = #{discountAmount},
+            = #{createUser.id},
+            create_time = #{createTime},
+            cno = #{cno}
+        where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select id,
+               category_id,
+               category_item_id,
+               pay_type_id,
+               amount,
+               pay_amount,
+               discount_amount,
+                ,
+               create_time,
+               cno
+        from consumption_item
+        where id = #{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,
+               category_id,
+               category_item_id,
+               pay_type_id,
+               amount,
+               pay_amount,
+               discount_amount,
+                ,
+               create_time,
+               cno
+        from consumption_item
+    </select>
+    <select id="selectForList" resultMap="BaseResultMap">
+        select t1.id,
+        t1.category_id t2_id,
+        t1.category_item_id t3_id,
+        t1.pay_type_id t4_id,
+        t1.amount,
+        t1.pay_amount,
+        t1.discount_amount,
+        t1.create_user_id e_id,
+        t1.create_time,
+        t1.cno,
+        t2.title t2_title,
+        t3.title t3_title,
+        t4.title t4_title,e.name e_name
+        from consumption_item t1
+        left join system_dictionary_item t2 on t1.category_id = t2.id
+        left join system_dictionary_item t3 on t1.category_item_id = t3.id
+        left join system_dictionary_item t4 on t1.pay_type_id = t4.id
+        left join employee e on t1.create_user_id = e.id
+        <where>
+            <if test="cno!=null and cno!=''">
+                and t1.cno like concat('%',#{cno},'%')
+            </if>
+            <if test="keyword!=null and keyword!=''">
+                and e.name like concat('%',#{keyword},'%')
+            </if>
+            <if test="category!=null and category.id!=null">
+                and t1.category_id = #{category.id}
+            </if>
+            <if test="minPayAmount!=null">
+                and t1.pay_amount &gt;= #{minPayAmount}
+            </if>
+            <if test="maxPayAmount!=null">
+                and t1.pay_amount &lt;= #{maxPayAmount}
+            </if>
+        </where>
+    </select>
+    <select id="selectByCno" resultMap="BaseResultMap">
+        select t1.id,
+               t1.category_id      t2_id,
+               t1.category_item_id t3_id,
+               t1.pay_type_id      t4_id,
+               t1.amount,
+               t1.pay_amount,
+               t1.discount_amount,
+               t1.create_user_id,
+               t1.create_time,
+               t1.cno,
+               t2.title            t2_title,
+               t3.title            t3_title,
+               t4.title            t4_title
+        from consumption_item t1
+                 left join system_dictionary_item t2 on t1.category_id = t2.id
+                 left join system_dictionary_item t3 on t1.category_item_id = t3.id
+                 left join system_dictionary_item t4 on t1.pay_type_id = t4.id
+        where t1.cno = #{cno}
+    </select>
+</mapper>
+
