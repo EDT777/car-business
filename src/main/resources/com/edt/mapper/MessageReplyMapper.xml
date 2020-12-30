@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.MessageReplyMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.MessageReply">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="message_id" property="message.id"/>
+        <result column="create_time" property="createTime"/>
+      <result column="e_id" property="replyUser.id"/>
+      <result column="e_name" property="replyUser.name"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey">
+        delete
+        from message_reply
+        where id = #{id}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into message_reply (content, message_id, reply_user_id, create_time)
+        values (#{content}, #{message.id}, #{replyUser.id}, #{createTime})
+    </insert>
+    <update id="updateByPrimaryKey">
+        update message_reply
+        set content       = #{content},
+            message_id    = #{message.id},
+            reply_user_id = #{replyUser.id},
+            create_time   = #{createTime}
+        where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select id, content, message_id, reply_user_id, create_time
+        from message_reply
+        where id = #{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, content, message_id, reply_user_id, create_time
+        from message_reply
+    </select>
+    <select id="selectForList" resultType="com.edt.domain.MessageReply">
+        select id, content, message_id, reply_user_id, create_time
+        from message_reply
+    </select>
+    <select id="selectByBoardId" resultMap="BaseResultMap">
+        select mr.id,
+               mr.content,
+               mr.message_id,
+               mr.reply_user_id e_id,
+               mr.create_time,e.name e_name
+        from message_reply mr
+        left join employee e on e.id = mr.reply_user_id
+        where  mr.message_id = #{id}
+    </select>
+</mapper>

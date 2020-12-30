@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>小豪互联网商户平台</title>
+  <title>小豪互联网门店管理平台</title>
   <#include "/common/link.ftl"/>
   <link rel="stylesheet" href="/css/index_css.css">
 </head>
@@ -23,7 +23,11 @@
         <button class="btn btn-primary-full" type="button" id="btn-appointment">
           马上预约
         </button>
-
+        <br/>
+        <br/>
+        <button class="btn btn btn-info" type="button" id="btn-board">
+          留言板
+        </button>
       </div>
       <div class="col-md-4 tel"  style="padding: 15px;">
         <h2 style="vertical-align:middle;"><i class="fa fa-phone"></i></h2>
@@ -72,9 +76,6 @@
 </div>
 
 <!-- Modal -->
-
-
-
 <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog " style="max-width: 380px;">
     <div class="modal-content">
@@ -167,6 +168,10 @@
               'error'
       )
     }
+  })
+
+  $('#btn-board').click(function () {
+    window.location.href="/pageBoard";
   })
 </script>
 </body>

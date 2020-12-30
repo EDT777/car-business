@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.QuestionItemMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.QuestionItem">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="judge_right" property="judgeRight"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey">
+        delete
+        from question_item
+        where id = #{id}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into question_item (title, question_id, judge_right)
+        values (#{title}, #{question.id}, #{judgeRight})
+    </insert>
+    <update id="updateByPrimaryKey">
+        update question_item
+        set title       = #{title},
+            question_id = #{question.id},
+            judge_right = #{judgeRight}
+        where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select id, title, question_id, judge_right
+        from question_item
+        where id = #{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, title, question_id, judge_right
+        from question_item
+    </select>
+    <select id="selectForList" resultType="com.edt.domain.QuestionItem">
+        select qi.id,
+               qi.title,
+               qi.question_id,
+               qi.judge_right
+        from question_item qi
+    </select>
+    <select id="selectByExamId" resultMap="BaseResultMap">
+        select qi.id,
+               qi.title,
+               qi.question_id,
+               qi.judge_right,
+               q.id    q_id,
+               q.title q_title,e.id e_id,e.title e_title
+        from question_item qi
+                  join question q on  q.id =  qi.question_id
+                  join exam_question eq on eq.question_id = q.id
+                  join exam e on e.id = eq.exam_id
+        where e.id = #{examId}
+    </select>
+
+    <select id="selectByQuestionId" resultMap="BaseResultMap">
+        select qi.id, qi.title, qi.question_id, qi.judge_right from question_item qi
+            left join question q on q.id = qi.question_id
+        where q.id=#{questionId}
+    </select>
+
+</mapper>

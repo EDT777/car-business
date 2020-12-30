@@ -15,4 +15,6 @@ public interface IRoleService {
     List<Role> listAll();
     //分页查询方法
     PageInfo<Role> query(QueryObject queryobject);
+
+    void updateRole(Long id, long roleId);
 }

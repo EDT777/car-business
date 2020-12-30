@@ -30,7 +30,7 @@
 
 		<!-- 必须要有的，使用这个配置链接数据库 @TODO:是否可以扩展 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-						connectionURL="jdbc:mysql:///business" userId="root" password="19980220">
+						connectionURL="jdbc:mysql:///car_business" userId="root" password="19980220">
 			<!-- 这里面可以设置property属性，每一个property属性都设置到配置的Driver上 -->
 		</jdbcConnection>
 
@@ -81,8 +81,14 @@
 				value=""/> -->
 		</javaClientGenerator>
 <!-- 自动生成表信息,填写数据库表名称 -->
-		<table tableName="salary">
-<!--			使用真实列表(数据库中的列名与实体类属性名一样),选择false则帮你实体类属性驼峰命名-->
+		<table tableName="activity">
+		<!--			使用真实列表(数据库中的列名与实体类属性名一样),选择false则帮你实体类属性驼峰命名-->
+		<property name="useActualColumnNames" value="false"/>
+		<property name="constructorBased" value="false" />
+		<generatedKey column="id" sqlStatement="JDBC" />
+	</table>
+		<table tableName="activity_item">
+			<!--			使用真实列表(数据库中的列名与实体类属性名一样),选择false则帮你实体类属性驼峰命名-->
 			<property name="useActualColumnNames" value="false"/>
 			<property name="constructorBased" value="false" />
 			<generatedKey column="id" sqlStatement="JDBC" />

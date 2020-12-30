@@ -34,8 +34,6 @@ public class AppointmentController {
         model.addAttribute("enums", AppointmentStatusEnum.values());
         model.addAttribute("businesses", businessService.listAll());
 
-//        model.addAttribute("",)
-        //        查询所有的门店
         return "appointment/list";
     }
 

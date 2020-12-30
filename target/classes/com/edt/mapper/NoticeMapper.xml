@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.NoticeMapper">
+
+    <resultMap id="BaseResultMap" type="com.edt.domain.Notice">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="create_time" property="createTime"/>
+        <result column="level" property="level"/>
+        <result column="ne_read" property="seeRead"/>
+        <result column="status" property="status"/>
+        <result column="content" property="content"/>
+        <result column="e_id" property="creator.id"/>
+        <result column="e_name" property="creator.name"/>
+        <result column="e_admin" property="creator.admin"/>
+        <result column="readNumber" property="readNumber"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey">
+        delete
+        from notice
+        where id = #{id}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into notice (title, create_time, creator_id, level, see_read, status, content)
+        values (#{title}, #{createTime}, #{creator.id}, #{level}, #{seeRead}, #{status}, #{content})
+    </insert>
+    <insert id="insertRelation">
+        insert into notice_employee (notice_id, employee_id, see_read) VALUES
+        <foreach collection="ids" separator="," item="item">
+            (#{id},#{item},0)
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKey">
+        update notice
+        set title      = #{title},
+            creator_id = #{creator.id},
+            level      = #{level},
+            content    = #{content},
+            status =#{status}
+        where id = #{id}
+    </update>
+    <update id="updateAllCurrentUser">
+        update notice set current_user_id =#{id}
+    </update>
+    <update id="updateIsRead">
+        update notice_employee set see_read = 1
+        where notice_id = #{id} and employee_id =#{empId}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select n.id,
+               n.title,
+               n.create_time,
+               n.creator_id e_id,
+               n.level,
+               n.see_read,
+               n.status,
+               n.content,
+               e.name       e_name
+        from notice n
+                 left join employee e on n.creator_id = e.id
+        where n.id = #{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,
+               title,
+               create_time,
+               creator_id,
+               level,
+               see_read,
+               status,
+               content
+        from notice
+    </select>
+    <select id="selectForList" resultMap="BaseResultMap">
+        select n.id,
+        n.title,
+        n.create_time,
+        n.creator_id e_id,
+        n.level,
+        ne.see_read ne_read,
+        n.status,
+        n.content,
+        e.name e_name,
+        e.admin e_admin, (select count(*) from notice_employee where notice_id =n.id and see_Read =1) as readNumber
+        from notice n
+        left join employee e on n.creator_id = e.id
+        left join notice_employee ne on n.id = ne.notice_id
+        <where>
+            <if test="true">
+                and ne.employee_id = #{currentUser.id}
+            </if>
+            <if test="startTime!=null">
+                and n.create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime!=null">
+                and n.create_time &lt;= #{endTime}
+            </if>
+            <if test="level!=null">
+                and n.level = #{level}
+            </if>
+            <if test="seeRead!=null">
+                and ne.see_read = #{seeRead}
+            </if>
+            <if test="!currentUser.admin">
+                and n.status=1
+            </if>
+        </where>
+order by ne.see_read,n.level desc
+    </select>
+    <select id="selectReadNumber" resultType="java.lang.Long">
+        select count(*) from notice_employee where notice_id =#{id} and see_Read =1
+    </select>
+</mapper>

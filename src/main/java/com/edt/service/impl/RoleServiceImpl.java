@@ -57,4 +57,9 @@ public class RoleServiceImpl implements IRoleService {
         List<Role> Roles = roleMapper.selectForList(qo);
         return new PageInfo<>(Roles);
     }
+
+    @Override
+    public void updateRole(Long id, long roleId) {
+        roleMapper.updateRole(id,roleId);
+    }
 }

@@ -24,4 +24,6 @@ public interface RoleMapper {
     void insertRelation(@Param("roleId") Long roleId, @Param("ids") Long[] ids);
 
     void deleteRelation(Long roleId);
+
+    void updateRole(@Param("id") Long id, @Param("roleId") long roleId);
 }

@@ -3,13 +3,17 @@
 <mapper namespace="com.edt.mapper.BusinessReportMapper">
     <select id="selectReport" resultType="java.util.HashMap">
         select ${groupType} groupType,
-               count(*) number,
-               sum(c.total_amount) totalAmount,
-               sum(c.discount_amount) discountAmount,
-               sum(c.pay_amount) payAmount
+        count(*) number,
+        sum(c.total_amount) totalAmount,
+        sum(c.discount_amount) discountAmount,
+        sum(c.pay_amount) payAmount
         from consumption c
         join business b on c.business_id = b.id
+
         <where>
+            <if test="true">
+                and c.status = 2
+            </if>
             <if test="businessId!=null">
                 and c.business_id = #{businessId}
             </if>

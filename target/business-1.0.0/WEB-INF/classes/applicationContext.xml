@@ -3,13 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--    配置DataSource 对象-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql:///business?characterEncoding=UTF-8"/>
+        <property name="url" value="jdbc:mysql:///car_business?characterEncoding=UTF-8"/>
         <property name="username" value="root"/>
         <property name="password" value="19980220"/>
     </bean>
@@ -53,6 +54,9 @@
     <mvc:annotation-driven/>
     <!--配置事务解析器  -->
     <tx:annotation-driven/>
+    <!-- 表示使用CGLIB动态代理技术织入增强 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
     <!--文件上传解析器 id必须是multipartResolver-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!--最大上传文件大小 10M-->
@@ -97,7 +101,13 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/><!--需要拦截的路径 -->
             <mvc:exclude-mapping path="/index"/><!--排除拦截登陆页面的路径 -->
+            <mvc:exclude-mapping path="/boardList"/><!--排除拦截登陆页面的路径 -->
+            <mvc:exclude-mapping path="/boardPage"/><!--排除拦截登陆页面的路径 -->
+            <mvc:exclude-mapping path="/listBoard"/>
+            <mvc:exclude-mapping path="/pageBoard"/>
             <mvc:exclude-mapping path="/systemDictionaryItem/selectByTypeSn"/><!--排除拦截路径 -->
+            <mvc:exclude-mapping path="/systemDictionaryItem/selectByParentId"/><!--排除拦截路径 -->
+            <mvc:exclude-mapping path="/messageBoard/saveOrUpdate"/>
             <mvc:exclude-mapping path="/appointment/save"/>
             <mvc:exclude-mapping path="/login.html"/><!--排除拦截登陆页面的路径 -->
             <mvc:exclude-mapping path="/userLogin"/><!--排除拦截登陆控制器的路径 -->
@@ -109,6 +119,10 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/><!--需要拦截的路径 -->
             <mvc:exclude-mapping path="/index"/><!--排除拦截登陆页面的路径 -->
+            <mvc:exclude-mapping path="/boardList"/>
+            <mvc:exclude-mapping path="/boardPage"/>
+            <mvc:exclude-mapping path="/listBoard"/>
+            <mvc:exclude-mapping path="/pageBoard"/>
             <mvc:exclude-mapping path="/nopermission"/><!--排除拦截的路径 -->
             <mvc:exclude-mapping path="/login.html"/><!--排除拦截的路径 -->
             <mvc:exclude-mapping path="/userLogin"/><!--排除拦截的路径 -->

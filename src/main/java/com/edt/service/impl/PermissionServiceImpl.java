@@ -52,7 +52,7 @@ public class PermissionServiceImpl implements IPermissionService {
     private ApplicationContext ctx;
 
     @Autowired
-    private RequestMappingHandlerMapping handlerMapping;//爆红没关系,问题不大
+    private RequestMappingHandlerMapping handlerMapping;//爆红没关系,问题不大 salute!
 
     @Override
     public void reload() {

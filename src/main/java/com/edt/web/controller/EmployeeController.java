@@ -7,6 +7,7 @@ import com.edt.qo.JsonResult;
 import com.edt.service.IDepartmentService;
 import com.edt.service.IEmployeeService;
 import com.edt.service.IRoleService;
+import com.edt.service.ISalaryService;
 import com.edt.util.RequiredPermission;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class EmployeeController {
     private IRoleService roleService;
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private ISalaryService salaryService;
     private IDepartmentService departmentService;
 
     private IEmployeeService employeeService;
@@ -58,6 +61,10 @@ public class EmployeeController {
     @RequestMapping("/delete")
     public String delete(Long id) {
         if (id != null) {
+            Employee employee = employeeService.get(id);
+            Long empId = employee.getId();
+            Long salaryId = salaryService.selectIdByEmpId(empId);
+            salaryService.delete(salaryId);
             employeeService.delete(id);
         }
         return "redirect:/employee/list";

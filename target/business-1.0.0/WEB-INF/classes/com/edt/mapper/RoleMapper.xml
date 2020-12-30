@@ -33,7 +33,11 @@
       sn = #{sn,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="AllResultMap" parameterType="java.lang.Long" >
+    <update id="updateRole">
+      update employee_role  set role_id =#{roleId}
+                where employee_id=#{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="AllResultMap" parameterType="java.lang.Long" >
     select id, name, sn
     from role
     where id = #{id,jdbcType=BIGINT}

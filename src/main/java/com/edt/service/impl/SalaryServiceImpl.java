@@ -49,4 +49,9 @@ public class SalaryServiceImpl implements ISalaryService {
         List<Salary> salarys = salaryMapper.selectForList(qo); //里面不需要自己写limit
         return new PageInfo<Salary>(salarys);
     }
+
+    @Override
+    public Long selectIdByEmpId(Long empId) {
+        return salaryMapper.selectIdByEmpId(empId);
+    }
 }

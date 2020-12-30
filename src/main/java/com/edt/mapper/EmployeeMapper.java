@@ -31,4 +31,7 @@ public interface EmployeeMapper {
     Employee selectByUsername(String username);
 
     void updatePassword(Employee record);
+
+
+    void updateAllacivity(Long id);
 }

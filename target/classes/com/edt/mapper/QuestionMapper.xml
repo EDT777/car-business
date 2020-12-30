@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.QuestionMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.Question">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="type" property="type"/>
+        <result column="judge_right" property="judgeRight"/>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.edt.domain.Question" extends="BaseResultMap">
+        <result column="eq_score" property="score"/>
+        <collection property="items" column="id" select="com.edt.mapper.QuestionItemMapper.selectByQuestionId"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey">
+        delete
+        from question
+        where id = #{id}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into question (title, type, judge_right)
+        values (#{title}, #{type}, #{judgeRight})
+    </insert>
+    <update id="updateByPrimaryKey">
+        update question
+        set title       = #{title},
+            type        = #{type},
+            judge_right = #{judgeRight}
+        where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select id, title, type, judge_right
+        from question
+        where id = #{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, title, type, judge_right
+        from question
+    </select>
+    <select id="selectForList" resultType="com.edt.domain.Question">
+        select id,
+               title,
+               type,
+               judge_right
+        from question
+    </select>
+    <select id="selectSingles" resultMap="BaseResultMap2">
+        select q.id,
+               q.title,
+               q.type,
+            eq.score eq_score
+        from question q
+                 left join exam_question eq on eq.question_id = q.id
+        where q.type = 1
+          and eq.exam_id = #{examId}
+    </select>
+    <select id="selectMultiples" resultMap="BaseResultMap2">
+        select q.id,
+               q.title,
+               q.type,
+            eq.score eq_score
+        from question q
+                 left join exam_question eq on eq.question_id = q.id
+        where q.type = 2
+          and eq.exam_id = #{examId}
+    </select>
+    <select id="selectJudges" resultMap="BaseResultMap2">
+        select q.id,
+               q.title,
+               q.type,
+               q.judge_right,
+        eq.score eq_score
+        from question q
+                 left join exam_question eq on eq.question_id = q.id
+        where q.type = 3
+          and eq.exam_id = #{examId}
+    </select>
+
+
+</mapper>

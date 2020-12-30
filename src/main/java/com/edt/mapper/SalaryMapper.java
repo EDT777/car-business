@@ -17,4 +17,6 @@ public interface SalaryMapper {
     int updateByPrimaryKey(Salary record);
 
     List<Salary> selectForList(QueryObject qo);
+
+    Long selectIdByEmpId(Long empId);
 }

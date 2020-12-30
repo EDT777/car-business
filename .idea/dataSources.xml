@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="tzh" uuid="b33ebafe-4aad-41b1-84ba-0cb609d31ddc">
+    <data-source source="LOCAL" name="tzh" uuid="48826ad1-a82f-4c2e-9a01-2905ce1c1d2d">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/business?serverTimezone=GMT%2B8&amp;useSSL=false</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/car_business?serverTimezone=GMT%2B8&amp;useSSL=false</jdbc-url>
     </data-source>
   </component>
 </project>

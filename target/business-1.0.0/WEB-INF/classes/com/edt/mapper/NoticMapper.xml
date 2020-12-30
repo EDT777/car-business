@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.NoticMapper" >
+  <resultMap id="BaseResultMap" type="com.edt.domain.Notic" >
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="create_time" property="createTime" />
+    <result column="creatorId" property="creatorid" />
+    <result column="level" property="level" />
+    <result column="read" property="read" />
+    <result column="status" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" >
+    delete from notic
+    where id = #{id}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+    insert into notic (name, create_time, creatorId, level, read, status)
+    values (#{name}, #{createTime}, #{creatorid}, #{level}, #{read}, #{status})
+  </insert>
+  <update id="updateByPrimaryKey" >
+    update notic
+    set name = #{name},
+      create_time = #{createTime},
+      creatorId = #{creatorid},
+      level = #{level},
+      read = #{read},
+      status = #{status}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+    select id, name, create_time, creatorId, level, read, status
+    from notic
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, create_time, creatorId, level, read, status
+    from notic
+  </select>
+</mapper>

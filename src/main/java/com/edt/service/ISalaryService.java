@@ -14,4 +14,6 @@ public interface ISalaryService {
     List<Salary> listAll();
     // 分页查询的方法
     PageInfo<Salary> query(QueryObject qo);
+
+    Long selectIdByEmpId(Long empId);
 }

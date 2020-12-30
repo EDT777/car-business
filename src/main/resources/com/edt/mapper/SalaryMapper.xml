@@ -66,4 +66,7 @@
         </where>
         order by s.year desc ,s.month desc ,s.money desc
     </select>
+    <select id="selectIdByEmpId" resultType="java.lang.Long">
+        select id from salary where employee_id =#{empId}
+    </select>
 </mapper>

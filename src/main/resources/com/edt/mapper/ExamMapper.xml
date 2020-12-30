@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.ExamMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.Exam">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="exam_minute" property="examMinute"/>
+        <result column="total_score" property="totalScore"/>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.edt.domain.Exam" extends="BaseResultMap">
+        <collection property="singles" column="id" select="com.edt.mapper.QuestionMapper.selectSingles"/>
+        <collection property="multiples" column="id" select="com.edt.mapper.QuestionMapper.selectMultiples"/>
+        <collection property="judges" column="id" select="com.edt.mapper.QuestionMapper.selectJudges"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey">
+        delete
+        from exam
+        where id = #{id}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into exam (title, exam_minute, total_score)
+        values (#{title}, #{examMinute}, #{totalScore})
+    </insert>
+    <insert id="insertRelation">
+        insert into exam_question (exam_id, question_id, sequence, score) VALUES
+        (#{id},#{questionId},#{sequence},#{score})
+    </insert>
+
+    <update id="updateByPrimaryKey">
+        update exam
+        set title       = #{title},
+            exam_minute = #{examMinute},
+            total_score = #{totalScore}
+        where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap2">
+        select id, title, exam_minute, total_score
+        from exam
+        where id = #{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, title, exam_minute, total_score
+        from exam
+    </select>
+    <select id="selectForList" resultType="com.edt.domain.Exam">
+        select e.id,
+               e.title,
+               e.exam_minute,
+               e.total_score
+        from exam e
+    </select>
+    <select id="selectSingleIds" resultType="java.lang.Long">
+    select id FROM question  where type = 1 ORDER BY RAND() limit 0,#{singleNum}
+</select>
+    <select id="selectMultipleIds" resultType="java.lang.Long">
+        select id FROM question  where type = 2 ORDER BY RAND() limit 0,#{singleNum}
+    </select>
+    <select id="selectJudgeIds" resultType="java.lang.Long">
+        select id FROM question  where type = 3 ORDER BY RAND() limit 0,#{singleNum}
+    </select>
+</mapper>

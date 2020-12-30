@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edt.mapper.SystemLogMapper">
+    <resultMap id="BaseResultMap" type="com.edt.domain.SystemLog">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="operation_name" property="operationName"/>
+        <result column="operation_method" property="operationMethod"/>
+        <result column="operation_parameters" property="operationParameters"/>
+        <result column="operation_time" property="operationTime"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="operation_duration" property="operationDuration"/>
+        <result column="operation_result" property="operationResult"/>
+        <result column="error_info" property="errorInfo"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey">
+        delete
+        from system_log
+        where id = #{id}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into system_log (user_name, operation_name, operation_method, operation_parameters,
+                                operation_time, ip_address, operation_duration, operation_result, error_info)
+        values (#{userName}, #{operationName}, #{operationMethod}, #{operationParameters},
+                #{operationTime}, #{ipAddress}, #{operationDuration}, #{operationResult}, #{errorInfo})
+    </insert>
+    <update id="updateByPrimaryKey">
+        update system_log
+        set user_name            = #{userName},
+            operation_name       = #{operationName},
+            operation_method     = #{operationMethod},
+            operation_parameters = #{operationParameters},
+            operation_time       = #{operationTime},
+            ip_address           = #{ipAddress},
+            operation_duration   = #{operationDuration},
+            operation_result     = #{operationResult},
+            error_info           = #{errorInfo}
+        where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select id,
+               user_name,
+               operation_name,
+               operation_method,
+               operation_parameters,
+               operation_time,
+               ip_address,
+               operation_duration,
+               operation_result,
+               error_info
+        from system_log
+        where id = #{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,
+               user_name,
+               operation_name,
+               operation_method,
+               operation_parameters,
+               operation_time,
+               ip_address,
+               operation_duration,
+               operation_result,
+               error_info
+        from system_log
+    </select>
+    <select id="selectForList" resultMap="BaseResultMap">
+        select id, user_name, operation_name, operation_method, operation_parameters, operation_time,
+        ip_address, operation_duration, operation_result, error_info
+        from system_log
+        <where>
+            <if test="userName!=null and userName!=''">
+                and user_name like concat('%',#{userName},'%')
+            </if>
+            <if test="operationMethod!=null and operationMethod!=''">
+                and operation_method like concat('%',#{operationMethod},'%')
+            </if>
+            <if test="ipAddress!=null and ipAddress!=''">
+                and ip_address like concat('%',#{ipAddress},'%')
+            </if>
+            <if test="operationResult!=null">
+                and operation_result =#{operationResult}
+            </if>
+            <if test="startTime!=null">
+                and operation_time &gt; #{startTime}
+            </if>
+            <if test="endTime!=null">
+                and operation_time &lt; #{endTime}
+            </if>
+        </where>
+        order by operation_time desc
+    </select>
+</mapper>
