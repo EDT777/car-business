@@ -1,0 +1,13 @@
+﻿
+
+                                                   .----------------.  .----------------.  .----------------.     ${AnsiColor.BRIGHT_RED}    _____ ${AnsiColor.BRIGHT_CYAN}   _____   ${AnsiColor.BRIGHT_YELLOW}_   _
+${AnsiColor.BRIGHT_RED}            .------. .------. .------.           ${AnsiColor.DEFAULT}|${AnsiColor.BRIGHT_MAGENTA} .--------------. || .--------------. || .--------------. ${AnsiColor.DEFAULT}|       ${AnsiColor.BRIGHT_RED} |_ " _| ${AnsiColor.BRIGHT_CYAN} |"_  /u${AnsiColor.BRIGHT_YELLOW} |'| |'|
+${AnsiColor.BRIGHT_RED}            |T.--. | |Z.--. | |H.--. |           ${AnsiColor.DEFAULT}|${AnsiColor.BRIGHT_MAGENTA} |  _________   | || |   ________   | || |  ____  ____  | ${AnsiColor.DEFAULT}|       ${AnsiColor.BRIGHT_RED}   | |   ${AnsiColor.BRIGHT_CYAN} U / // ${AnsiColor.BRIGHT_YELLOW}/| |_| |\
+${AnsiColor.BRIGHT_RED}            | :/\: | | :(): | | :/\: |           ${AnsiColor.DEFAULT}|${AnsiColor.BRIGHT_MAGENTA} | |  _   _  |  | || |  |  __   _|  | || | |_   ||   _| | ${AnsiColor.DEFAULT}|       ${AnsiColor.BRIGHT_RED}  /| |\  ${AnsiColor.BRIGHT_CYAN} \/ /_  ${AnsiColor.BRIGHT_YELLOW}U|  _  |u
+${AnsiColor.BRIGHT_RED}            | (__) | | ()() | | (__) |           ${AnsiColor.DEFAULT}|${AnsiColor.BRIGHT_MAGENTA} | |_/ | | \_|  | || |  |_/  / /    | || |   | |__| |   | ${AnsiColor.DEFAULT}|       ${AnsiColor.BRIGHT_RED} u |_|U  ${AnsiColor.BRIGHT_CYAN} /____| ${AnsiColor.BRIGHT_YELLOW} |_| |_|
+${AnsiColor.BRIGHT_RED}            | '--'T| | '--'Z| | '--'H|           ${AnsiColor.DEFAULT}|${AnsiColor.BRIGHT_MAGENTA} |     | |      | || |     .'.' _   | || |   |  __  |   | ${AnsiColor.DEFAULT}|       ${AnsiColor.BRIGHT_RED} _// \\_ ${AnsiColor.BRIGHT_CYAN} _//<<,-${AnsiColor.BRIGHT_YELLOW} //   \\
+${AnsiColor.BRIGHT_RED}            `------' `------' `------'           ${AnsiColor.DEFAULT}|${AnsiColor.BRIGHT_MAGENTA} |    _| |_     | || |   _/ /__/ |  | || |  _| |  | |_  | ${AnsiColor.DEFAULT}|       ${AnsiColor.BRIGHT_RED}(__) (__)${AnsiColor.BRIGHT_CYAN}(__) (_/${AnsiColor.BRIGHT_YELLOW}(_") ("_)
+                                                 ${AnsiColor.DEFAULT}| ${AnsiColor.BRIGHT_MAGENTA}|   |_____|    | || |  |________|  | || | |____||____| | ${AnsiColor.DEFAULT}Y
+                                                 ${AnsiColor.DEFAULT}| ${AnsiColor.BRIGHT_MAGENTA}|              | || |              | || |              | ${AnsiColor.DEFAULT}|
+                                                 ${AnsiColor.DEFAULT}| ${AnsiColor.BRIGHT_MAGENTA}'--------------' || '--------------' || '--------------' ${AnsiColor.DEFAULT}|        ${AnsiColor.DEFAULT}
+                                                   '----------------'  '----------------'  '----------------'

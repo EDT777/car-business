@@ -3,13 +3,14 @@ package com.edt.web.interceptor;
 import com.edt.domain.Employee;
 import com.edt.util.RequiredPermission;
 import com.edt.util.UserContext;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
+@Component
 public class PermissionInterceptor implements HandlerInterceptor {
 
 

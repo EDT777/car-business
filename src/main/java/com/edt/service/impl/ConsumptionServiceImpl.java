@@ -15,13 +15,16 @@ import com.edt.service.IConsumptionService;
 import com.edt.util.UserContext;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
-
+@Slf4j
 @Service
 public class ConsumptionServiceImpl implements IConsumptionService {
 
@@ -35,6 +38,7 @@ public class ConsumptionServiceImpl implements IConsumptionService {
 
         consumptionMapper.insert(consumption);
     }
+
 
     @Override
     public void delete(Long id) {
@@ -76,6 +80,7 @@ public class ConsumptionServiceImpl implements IConsumptionService {
 
     @Override
     public Consumption save(String appointmentAno) {
+
         Date date = new Date();
 //        根据预约单流水号查询预约单对象
         Appointment appointment = appointmentService.selectByAno(appointmentAno);
@@ -106,6 +111,8 @@ public class ConsumptionServiceImpl implements IConsumptionService {
         consumption.setCreateUser(UserContext.getCurrentUser());
 //        把结算单保存到数据库中
         consumptionMapper.insert(consumption);
+        log.info("结算单业务: 生成流水号为{}的结算单,关联流水号为{}的预约单,该预约单的状态转为{}"
+                ,format+numbers,appointmentAno,AppointmentStatusEnum.CONSUME.getName());
         return consumption;
     }
 
